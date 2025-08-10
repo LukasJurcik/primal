@@ -1,5 +1,9 @@
 name: Snapshot entire Webflow site
 
+# 👇 allow the workflow to push back to the repo
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: "*/15 * * * *"   # every 15 minutes
@@ -11,6 +15,8 @@ jobs:
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0       # needed when pushing
 
       - name: Install wget
         run: sudo apt-get update && sudo apt-get install -y wget
@@ -28,6 +34,7 @@ jobs:
             --adjust-extension \
             --page-requisites \
             --no-parent \
+            --wait=0.5 --random-wait \
             --no-check-certificate \
             -P snapshots/latest \
             https://studioprimal02.webflow.io/
@@ -37,8 +44,8 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add snapshots
-            git commit -m "Auto full-site snapshot"
+            git add -A
+            git commit -m "Auto full-site snapshot $(date -u +'%Y-%m-%d %H:%M:%S')"
             git push
           else
             echo "No changes."
