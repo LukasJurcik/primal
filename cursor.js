@@ -1,7 +1,7 @@
 // /cursor.js (repo root)
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  console.log("cursor.js loaded ✅");
+  console.log("cursor.js loaded");
 
   const el = document.createElement("div");
   el.textContent = "cursor.js wroks!";
