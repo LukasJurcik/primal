@@ -4,7 +4,7 @@ window.Webflow.push(() => {
   console.log("cursor.js loaded ✅");
 
   const el = document.createElement("div");
-  el.textContent = "cursor.js is working!!!";
+  el.textContent = "cursor.js wroks!";
   Object.assign(el.style, {
     position: "fixed", bottom: "20px", right: "20px",
     background: "#222", color: "#fff", padding: "10px 14px",
